@@ -5,8 +5,13 @@ const PORT = process.env.PORT || 8000;
 // Create an instance of express application
 const app= express();
 const expressLayout = require('express-ejs-layouts');
+const db = require('./config/mongoose');
 
+app.use(express.static('./assets'));
 app.use(expressLayout);
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
+
 // view engine setup
 app.set('view engine', 'ejs');
 // settinge folder for views
