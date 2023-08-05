@@ -1,12 +1,12 @@
 //imported express module
 const express=require("express");
-
 //Define a port number
 const PORT = process.env.PORT || 8000;
-
 // Create an instance of express application
 const app= express();
+const expressLayout = require('express-ejs-layouts');
 
+app.use(expressLayout);
 // view engine setup
 app.set('view engine', 'ejs');
 // settinge folder for views
