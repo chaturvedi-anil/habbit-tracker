@@ -40,6 +40,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// set user in locals
+app.use(passport.setAuthenticatedUser);
+
 // middleware for routing
 app.use('/', require('./routes/'));
 
