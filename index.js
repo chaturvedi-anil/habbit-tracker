@@ -14,6 +14,7 @@ const passport = require('passport')
 const passportLocal = require('./config/passport-local-strategy');
 
 app.use(express.urlencoded());
+// cookie setup
 app.use(cookieParser());
 
 app.use(express.static('./assets'));
