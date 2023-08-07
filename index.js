@@ -26,22 +26,22 @@ app.set('view engine', 'ejs');
 // settinge folder for views
 app.set('views', './views');
 
-app.use(session({
-    name: 'habbit-tracker',
-    // TODO change the secret before deployment in production mode
-    secret: 'something',
-    saveUninitialized: false,
-    resave: false,
-    cookie:{
-        maxAge: (1000 * 60 * 100)
-    }
-}));
+// app.use(session({
+//     name: 'habbit-tracker',
+//     // TODO change the secret before deployment in production mode
+//     secret: 'something',
+//     saveUninitialized: false,
+//     resave: false,
+//     cookie:{
+//         maxAge: (1000 * 60 * 100)
+//     }
+// }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-// set user in locals
-app.use(passport.setAuthenticatedUser);
+// // set user in locals
+// app.use(passport.setAuthenticatedUser);
 
 // middleware for routing
 app.use('/', require('./routes/'));
