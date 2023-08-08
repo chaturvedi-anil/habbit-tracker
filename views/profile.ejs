@@ -1,13 +1,15 @@
 <link rel="stylesheet" href="./css/profile.css">
 <main>
-    <div>
-        <a href="/">home</a>
-    </div>
-    <h1>profile page</h1>
-
-    <p> name -  <%= user.name %>
-
-        
-    <p> email - <%= user.email %>
+    <h1>User Profile</h1>
+    <ul>
+        <% if(locals.user){ %>
+            <li>
+                <%= user.name %>
+            </li>
+            <li>
+                <%= user.email %>
+            </li>
+        <% } %>
+    </ul>
 
 </main>
