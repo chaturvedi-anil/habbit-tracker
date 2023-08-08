@@ -2,30 +2,20 @@ const User=require('../models/users');
 
 module.exports.profile = function(req, res)
 {
-    if(req.cookies.user_id)
-    {
-        User.findById(req.cookies.user_id)
-        .then((user)=>
-        {
-            return res.render('profile',{
-                title: 'User Profile',
-                user: user
-            });
-        })
-        .catch((err)=>
-        {
-            console.log('user not found');
-            return res.redirect('/users/sign-in');
-        })
-    }
-    else
-    {
-        return res.redirect('/users/sign-in');
-    }
+
+    return res.render('profile',{
+        title: 'User Profile',
+
+    });
 }
 
 module.exports.signUp = function(req, res)
 {
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/users/profile');
+    }
+
     return res.render('sign_up',{
         title: 'Sign Up'
     });
@@ -33,6 +23,10 @@ module.exports.signUp = function(req, res)
 
 module.exports.singIn = function(req, res)
 {
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/users/profile');
+    } 
     return res.render('sign_in',{
         title: 'Sign In'
     });
@@ -78,22 +72,5 @@ module.exports.create =  function(req, res)
 // sign in and create a session for user
 module.exports.createSession = function(req, res)
 {
-    // find the user 
-    User.findOne({email: req.body.email})
-    .then((user)=>
-    {
-        // handle password which doesn't match
-        if(user.password != req.body.password)
-        {
-            return res.redirect('back');
-        }
-
-        res.cookie('user_id', user.id);
-        return res.redirect('/users/profile');
-    })
-    .catch((err)=>
-    {
-        console.log(`Error in finding a user in database ${err}`);
-        return res.redirect('back');
-    });
+    return res.redirect('/users/profile');
 }
