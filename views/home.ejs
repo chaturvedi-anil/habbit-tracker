@@ -4,6 +4,7 @@
         <button id="add-habbit-button" onclick="showAddHabbitForm()"> 
             Add New Habbit
         </button>
+        <!-- habbit form -->
         <div id="add-habbit-form-container">
             <h1>Add New Habbit</h1> 
             <button id="close-form-button" onclick="hideAddHabbitForm()">X</button>
@@ -13,6 +14,16 @@
                 <input class="btn" type="submit" value="Add Habbit">
             </form>
         </div>
+
+        <ul>
+            <% for(let habbit of habbitList) {%>
+                <li>
+                    <div>
+                        <%= habbit.content %>
+                    </div>
+                </li>
+            <% } %>
+        </ul>
     <% } else { %>
         <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae ex vero iusto voluptate fugit sit, inventore ad totam quas cum quae dolor nostrum incidunt sed, ducimus, voluptatum similique. Harum, dolor!

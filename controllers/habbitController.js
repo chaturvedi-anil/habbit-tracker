@@ -8,7 +8,11 @@ module.exports.createHabbit =async function(req, res)
     let habbit = await Habbit.findOne({content: req.content});
     if(!habbit)
     {
-        Habbit.create(req.body)
+        console.log(req.user);
+        Habbit.create({
+            user: req.user._id,
+            content: req.body.content
+        })
         .then((newHabbit)=>
         {
             console.log('new habbit created');
