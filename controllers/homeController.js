@@ -1,9 +1,11 @@
 const Habbit = require('../models/habbits');
+
 module.exports.home = async function(req, res)
 {
+    console.log(req.user);
     try 
     {
-        const habbit = await Habbit.find({user: req.user._id});
+        const habbit = await Habbit.find({users: req.user._id});
         if (!habbit)
         {
             console.log('User not found');

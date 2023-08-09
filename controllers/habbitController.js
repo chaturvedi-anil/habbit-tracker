@@ -4,17 +4,17 @@ const Habbit = require('../models/habbits');
 // create habbit in db
 module.exports.createHabbit =async function(req, res)
 {
-    console.log(req.body);
     let habbit = await Habbit.findOne({content: req.content});
     if(!habbit)
     {
-        console.log(req.user);
         Habbit.create({
-            user: req.user._id,
+            users: req.user._id,
             content: req.body.content
         })
         .then((newHabbit)=>
         {
+            User.newHabbit.push(newHabbit);
+            User.save();
             console.log('new habbit created');
             return res.redirect('back');
         })

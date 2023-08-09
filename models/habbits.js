@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const habbitSchema = new mongoose.Schema({
-    user:
+    users:
     {
         type: mongoose.Schema.ObjectId,
         ref: 'Users'
