@@ -17,13 +17,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    habbits:
-    [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: 'Habbits'
-        }
-    ]
+    // habbits:
+    // [
+    //     {
+    //         type: mongoose.Schema.ObjectId,
+    //         ref: 'Habbits'
+    //     }
+    // ]
 },
 {
     timestamps: true

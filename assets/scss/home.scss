@@ -1,3 +1,44 @@
-body{
-    background-color: red;
+main
+{
+    #add-habbit-form-container
+    {
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%);
+        background-color: rgb(71, 70, 70);
+        color: rgb(255, 255, 255);
+        text-align: center;
+        display: none;
+        padding: 0.5rem;
+        border: solid 2px rgb(21, 20, 20);
+        box-shadow: 0px 6px 5px 5px rgb(152, 151, 151);
+        
+        #close-form-button
+        {
+            position: absolute;
+            top: 1%;
+            right: 1%;
+        }
+        #close-form-button:hover
+        {
+            color: white;
+            background-color: red;
+        }
+        form
+        {
+            text-align: center;
+            input
+            {
+                display: block;
+                margin: 1rem;
+                padding: 0.5rem;
+                font-size: 1.2rem;
+            }
+            .btn
+            {
+                margin-left: 80px;
+            }
+        }
+    }
 }

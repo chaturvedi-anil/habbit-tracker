@@ -1,2 +1,28 @@
-body {
-  background-color: red; }
+main #add-habbit-form-container {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%);
+  background-color: #474646;
+  color: white;
+  text-align: center;
+  display: none;
+  padding: 0.5rem;
+  border: solid 2px #151414;
+  box-shadow: 0px 6px 5px 5px #989797; }
+  main #add-habbit-form-container #close-form-button {
+    position: absolute;
+    top: 1%;
+    right: 1%; }
+  main #add-habbit-form-container #close-form-button:hover {
+    color: white;
+    background-color: red; }
+  main #add-habbit-form-container form {
+    text-align: center; }
+    main #add-habbit-form-container form input {
+      display: block;
+      margin: 1rem;
+      padding: 0.5rem;
+      font-size: 1.2rem; }
+    main #add-habbit-form-container form .btn {
+      margin-left: 80px; }

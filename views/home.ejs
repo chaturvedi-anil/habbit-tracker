@@ -1,7 +1,35 @@
 <link rel="stylesheet" href="./css/home.css">
 <main>
-    <h1>home page</h1>
-
-    <a href="/users/sign-up">SignUp</a>
-    <a href="/users/sign-in">SignIn</a>
+    <% if(locals.user) { %> 
+        <button id="add-habbit-button" onclick="showAddHabbitForm()"> 
+            Add New Habbit
+        </button>
+        <div id="add-habbit-form-container">
+            <h1>Add New Habbit</h1> 
+            <button id="close-form-button" onclick="hideAddHabbitForm()">X</button>
+            <hr>
+            <form action="/habbit/create" method="POST">
+                <input class="text-box" type="text" name="content" placeholder="Enter Habbit" required>
+                <input class="btn" type="submit" value="Add Habbit">
+            </form>
+        </div>
+    <% } else { %>
+        <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae ex vero iusto voluptate fugit sit, inventore ad totam quas cum quae dolor nostrum incidunt sed, ducimus, voluptatum similique. Harum, dolor!
+        </p>
+    <% } %> 
 </main>
+
+<script>
+    function showAddHabbitForm()
+    {
+        let formDiv=document.getElementById('add-habbit-form-container');
+        formDiv.style.display='block';
+    }
+
+    function hideAddHabbitForm()
+    {
+        let formDiv=document.getElementById('add-habbit-form-container');
+        formDiv.style.display='none';
+    }
+</script>
