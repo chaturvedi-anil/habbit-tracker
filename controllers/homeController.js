@@ -4,6 +4,7 @@ module.exports.home = async function(req, res)
 {
     try 
     {
+        // if user is signed in then if condition will execute
         if(res.locals.user)
         {
             // res.locals.user is come form passport-local-strategy
@@ -19,6 +20,7 @@ module.exports.home = async function(req, res)
                 habbitList
             });
         }
+        // if user is not signed in then else condition will execute
         else
         {
             return res.redirect('/users/sign-in');

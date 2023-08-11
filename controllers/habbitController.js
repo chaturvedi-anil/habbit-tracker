@@ -31,8 +31,39 @@ module.exports.createHabbit =async function(req, res)
     }
 }
 
-// delete habbit from db 
 module.exports.deleteHabbit = function(req, res)
 {
+    Habbit.findById(req.params.id)
+    .then((habbit)=>
+    {
+        // .id means converting the object id into string
+        if(habbit.users.toString() === req.user.id)
+        {
+            // delete habbit
+            habbit.deleteOne();
 
+            // delete habbit from habbits array from users collection
+            User.findOneAndUpdate({_id: req.user.id}, {$pull:{habbits: req.params.id}})
+            .then((updatedUser)=>
+            {
+                console.log('habit deleted from user collection');
+                // console.log(updatedUser);
+                return res.redirect('/');
+            })
+            .catch((err)=>
+            {
+                console.log(`Error in deleting the habbits from user ${err}`);
+                return res.redirect('/');
+            });
+        }
+        else
+        {
+            console.log('if condition is not true');
+        }
+    })
+    .catch((err)=>
+    {
+        console.log(`Error in finding habbit in habbit schema ${err}`);
+        return res.redirect('/');
+    });
 }

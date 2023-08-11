@@ -5,7 +5,7 @@ const habbitController = require('../controllers/habbitController');
 
 router.post('/create', passport.checkAuthentication ,habbitController.createHabbit);
 
-router.get('/delete', habbitController.deleteHabbit);
+router.get('/delete/:id', habbitController.deleteHabbit);
 
 
 module.exports = router;
