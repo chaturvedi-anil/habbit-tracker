@@ -2,19 +2,27 @@ const Habbit = require('../models/habbits');
 
 module.exports.home = async function(req, res)
 {
-    console.log(req.user);
     try 
     {
-        const habbit = await Habbit.find({users: req.user._id});
-        if (!habbit)
+        if(res.locals.user)
         {
-            console.log('User not found');
-        }
+            // res.locals.user is come form passport-local-strategy
+            const habbitUser = res.locals.user._id;
+            const habbitList = await Habbit.find({users:habbitUser});
+            if (!habbitList)
+            {
+                console.log('User not found');
+            }
 
-        return res.render('home', {
-            title: 'Home',
-            habbitList: habbit
-        });
+            return res.render('home', {
+                title: 'Home',
+                habbitList
+            });
+        }
+        else
+        {
+            return res.redirect('/users/sign-in');
+        }
     } 
     catch(err) 
     {
