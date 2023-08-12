@@ -25,7 +25,7 @@ module.exports.createHabbit =async function(req, res)
             return res.redirect('back');
         }
     }
-    catch
+    catch(err)
     {
         console.log(`Error in creating habbit ${err}`);
         return res.redirect('back');
@@ -36,6 +36,9 @@ module.exports.deleteHabbit = async function(req, res)
 {
     try
     {
+        // find habbit in habbit schema 
+        let habbit = await Habbit.findOne({_id: req.params.id});
+
         // .id means converting the object id into string
         if(habbit.users.toString() === req.user.id)
         {
