@@ -4,37 +4,37 @@ const Habbit = require('../models/habbits');
 // create habbit in db
 module.exports.createHabbit =async function(req, res)
 {
-    let habbit = await Habbit.findOne({content: req.content});
-    if(!habbit)
+    try
     {
-        Habbit.create({
-            users: req.user._id,
-            content: req.body.content
-        })
-        .then((newHabbit)=>
+        let habbit = await Habbit.findOne({content: req.content});
+        if(!habbit)
         {
+            let newHabbit= await Habbit.create({
+                users: req.user._id,
+                content: req.body.content
+            });
+
             User.newHabbit.push(newHabbit);
             User.save();
             console.log('new habbit created');
             return res.redirect('back');
-        })
-        .catch((err)=>
+        }
+        else
         {
-            console.log(`Error in creating habbit ${err}`);
+            console.log('this habbit already exist');
             return res.redirect('back');
-        });
+        }
     }
-    else
+    catch
     {
-        console.log('this habbit already exist');
+        console.log(`Error in creating habbit ${err}`);
         return res.redirect('back');
     }
 }
 
-module.exports.deleteHabbit = function(req, res)
+module.exports.deleteHabbit = async function(req, res)
 {
-    Habbit.findById(req.params.id)
-    .then((habbit)=>
+    try
     {
         // .id means converting the object id into string
         if(habbit.users.toString() === req.user.id)
@@ -43,27 +43,21 @@ module.exports.deleteHabbit = function(req, res)
             habbit.deleteOne();
 
             // delete habbit from habbits array from users collection
-            User.findOneAndUpdate({_id: req.user.id}, {$pull:{habbits: req.params.id}})
-            .then((updatedUser)=>
-            {
-                console.log('habit deleted from user collection');
-                // console.log(updatedUser);
-                return res.redirect('/');
-            })
-            .catch((err)=>
-            {
-                console.log(`Error in deleting the habbits from user ${err}`);
-                return res.redirect('/');
-            });
+            await User.findOneAndUpdate({_id: req.user.id}, {$pull:{habbits: req.params.id}});
+
+            console.log('habit deleted from user collection');
+            // console.log(updatedUser);
+            return res.redirect('/');
         }
         else
         {
             console.log('if condition is not true');
         }
-    })
-    .catch((err)=>
+    }
+    // if any error then execute this
+    catch(err)
     {
-        console.log(`Error in finding habbit in habbit schema ${err}`);
+        console.log(`Error in deleting habbit : ${err}`);
         return res.redirect('/');
-    });
+    }
 }

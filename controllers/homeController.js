@@ -28,6 +28,6 @@ module.exports.home = async function(req, res)
     } 
     catch(err) 
     {
-        console.error('Error fetching user:', err);
+        console.error(`Error fetching user: ${err}`);
     }
 }

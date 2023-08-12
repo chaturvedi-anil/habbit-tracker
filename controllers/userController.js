@@ -11,6 +11,7 @@ module.exports.profile = function(req, res)
 
 module.exports.signUp = function(req, res)
 {
+    //if user is already signed in then redirect user to profile page 
     if(req.isAuthenticated())
     {
         return res.redirect('/users/profile');
@@ -23,50 +24,49 @@ module.exports.signUp = function(req, res)
 
 module.exports.singIn = function(req, res)
 {
+    //if user is already signed in then redirect user to profile page
     if(req.isAuthenticated())
     {
         return res.redirect('/users/profile');
     } 
+
     return res.render('sign_in',{
         title: 'Sign In'
     });
 }
 
 // get user data and create user 
-module.exports.create =  function(req, res)
+module.exports.create = async function(req, res)
 {
-    if(req.body.password != req.body.confirm_password)
+    try
     {
-        return res.redirect('back');
-    }
+        if(req.body.password != req.body.confirm_password)
+        {
+            return res.redirect('back');
+        }
 
-    User.findOne({email: req.body.email})
-    .then((user)=>
-    {
+        // find user email in db
+        let user= await User.findOne({email: req.body.email});
+        
+        // if user email not found then create new user 
         if(!user)
         {
-            User.create(req.body)
-            .then((user)=>{
-                console.log('new user created');
-                return res.redirect('/users/sign-in');
-            })
-            .catch((err)=>
-            {
-                console.log(`Error in creating a user ${err}`);
-                return res.redirect('back');
-            });
+            let newUser = await User.create(req.body);
+            console.log('new user created');
+            return res.redirect('/users/sign-in');
         }
+        // if user email is found then redirect user to singup page
         else
         {
             console.log('this user already exist');
             return res.redirect('back');
         }
-    })
-    .catch((err)=>
+    }
+    catch(err)
     {
-        console.log(`Error in finding a user in database ${err}`);
+        console.log(`Error in creating a user ${err}`);
         return res.redirect('back');
-    });
+    }
 } 
 
 // sign in and create a session for user
