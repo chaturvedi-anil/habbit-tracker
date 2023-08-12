@@ -6,8 +6,9 @@ module.exports.createHabbit =async function(req, res)
 {
     try
     {
-        let habbit = await Habbit.findOne({content: req.content});
-        if(!habbit)
+        let habbit = await Habbit.findOne({content: req.body.content});
+        
+        if(habbit.content !== req.body.content)
         {
             let newHabbit= await Habbit.create({
                 users: req.user._id,
@@ -21,6 +22,7 @@ module.exports.createHabbit =async function(req, res)
         }
         else
         {
+            // TODO show flash message for duplicate habbit
             console.log('this habbit already exist');
             return res.redirect('back');
         }
