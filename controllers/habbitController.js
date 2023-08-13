@@ -8,6 +8,7 @@ module.exports.createHabbit =async function(req, res)
     {
         let habbit = await Habbit.findOne({content: req.body.content});
         
+        // check if habbit already exist  
         if(habbit.content !== req.body.content)
         {
             let newHabbit= await Habbit.create({
