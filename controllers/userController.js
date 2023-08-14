@@ -2,7 +2,6 @@ const User=require('../models/users');
 
 module.exports.profile = function(req, res)
 {
-
     return res.render('profile',{
         title: 'User Profile',
 
@@ -42,6 +41,7 @@ module.exports.create = async function(req, res)
     {
         if(req.body.password != req.body.confirm_password)
         {
+            req.flash('error', 'password and confirm password should be same!');
             return res.redirect('back');
         }
 
@@ -52,19 +52,22 @@ module.exports.create = async function(req, res)
         if(!user)
         {
             let newUser = await User.create(req.body);
-            console.log('new user created');
+            // console.log('new user created');
+            req.flash('success', 'new user created');
             return res.redirect('/users/sign-in');
         }
         // if user email is found then redirect user to singup page
         else
         {
-            console.log('this user already exist');
+            // console.log('this user already exist');
+            req.flash('error', 'this user already exist');
             return res.redirect('back');
         }
     }
     catch(err)
     {
-        console.log(`Error in creating a user ${err}`);
+        // console.log(`Error in creating a user ${err}`);
+        req.flash('error', err);
         return res.redirect('back');
     }
 } 
@@ -82,7 +85,6 @@ module.exports.destroySession = function(req, res)
     req.logout(function(err) {
         if (err) {
             console.log('Error logging out:', err);
-            req.flash('error', 'error in logout');
             return res.redirect('/');
         }
     });
