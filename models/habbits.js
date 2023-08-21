@@ -10,7 +10,14 @@ const habbitSchema = new mongoose.Schema({
     {
         type: String,
         required: true
-    }
+    },
+    dates:
+    [
+        {
+            date: String,
+            complete: String
+        }
+    ]
 }, 
 {
     timestamp: true

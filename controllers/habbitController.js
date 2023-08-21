@@ -2,57 +2,36 @@ const User = require('../models/users');
 const Habbit = require('../models/habbits'); 
 
 // Create a new habit and save it to the user's habbits array
-async function createNewHabbit(req, res) {
-    try {
+module.exports.createHabbit = async function(req, res) 
+{
+    try 
+    {
+        // added for date
+        let dates = [], tzoffset = (new Date()).getTimezoneOffset() * 60000;
+        var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 10);
+        dates.push({ date: localISOTime, complete: 'none' });
+
         // Create a new Habbit using the Habbit model
         let newHabbit = await Habbit.create({
             users: req.user._id,
-            content: req.body.content
+            content: req.body.content,
+            dates
         });
 
-        // Push the newHabbit into the User's habbits array
-        User.habbits.push(newHabbit);
-
-        // Save the updated User object (assuming User is a Mongoose model)
-        await User.save();
+        // Push the newHabbit into the User's habbits array and update
+        await User.updateOne({ _id: req.user._id }, { $push: { habbits: newHabbit } });
 
         // Flash a success message and redirect back
         req.flash('success', 'New habit created');
         return res.redirect('back');
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         // Handle any errors that occurred during the process
-        console.error(error);
+        console.error(`createHabbit ${error}`);
 
         // Flash an error message and redirect back
         req.flash('error', 'Error creating new habit');
-        return res.redirect('back');
-    }
-}
-
-// Handle the creation of a new habit
-module.exports.createHabbit = async function(req, res) {
-    try {
-        console.log('try ', req.body.content);
-        
-        // Find if the habit already exists
-        let habbit = await Habbit.findOne({ content: req.body.content });
-        console.log('try habbit ', habbit);
-
-        if (!habbit) {
-            // If habit doesn't exist, create a new habit
-            await createNewHabbit(req, res);
-        } else {
-            if (!habbit.users.equals(req.user._id)) {
-                // If habit exists but belongs to a different user, create a new habit
-                await createNewHabbit(req, res);
-            } else {
-                // If habit exists and belongs to the same user, show error message
-                req.flash('error', 'This habit already exists');
-                return res.redirect('back');
-            }
-        }
-    } catch (err) {
-        console.log(`Error in creating habit: ${err}`);
         return res.redirect('back');
     }
 }
