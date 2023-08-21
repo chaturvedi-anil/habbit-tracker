@@ -1,49 +1,23 @@
 <link rel="stylesheet" href="./css/home.css">
 <main>
     <% if(locals.user) { %> 
-        <button id="add-habbit-button" onclick="showAddHabbitForm()"> 
-            Add New Habbit
-        </button>
+
         <!-- habbit form -->
         <div id="add-habbit-form-container">
             <h1>Add New Habbit</h1> 
-            <button id="close-form-button" onclick="hideAddHabbitForm()">X</button>
-            <hr>
             <form action="/habbit/create" method="POST">
                 <input class="text-box" type="text" name="content" placeholder="Enter Habbit" required>
                 <input class="btn" type="submit" value="Add Habbit">
             </form>
         </div>
-
-        <ul>
-            <% for(let habbit of habbitList) {%>
-                <li>
-                    <div>
-                        <%= habbit.content %>
-                        <span>
-                            <a href="/habbit/delete/<%= habbit._id %>">X</a>
-                        </span>
-                    </div>
-                </li>
-            <% } %>
-        </ul>
     <% } else { %>
         <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae ex vero iusto voluptate fugit sit, inventore ad totam quas cum quae dolor nostrum incidunt sed, ducimus, voluptatum similique. Harum, dolor!
+           Lorem ipsum dolor sit amet consectetur adipisicing elit. Non a rerum voluptates ea assumenda. Facere cumque debitis rerum rem nisi aspernatur est minus, voluptatum, ea recusandae reiciendis autem fuga! Quis.
+           Fugiat delectus molestias ea aut quidem nam maiores dolor aperiam accusantium atque, veniam minus laudantium a ut tenetur quo alias libero ab soluta quasi labore! Nulla excepturi doloremque quaerat omnis?
+           Aliquam quis provident quos iste eligendi fuga at voluptatum quasi error quibusdam officiis consequatur porro assumenda, tempore repudiandae, sunt nobis libero reiciendis soluta alias earum. Qui voluptates laudantium accusantium quasi.
+           Debitis sed maxime facilis, ratione earum amet aperiam dolorum modi quas velit possimus optio neque soluta quasi similique commodi. Culpa facere magnam earum optio voluptatibus? Cupiditate ab asperiores quo! Aut!
+           Eligendi blanditiis ad nam id quos suscipit itaque earum, quas rem aspernatur doloremque labore explicabo cumque ut totam magni accusantium praesentium! Commodi fugit nulla nobis itaque suscipit nemo iste veritatis.
         </p>
     <% } %> 
 </main>
 
-<script>
-    function showAddHabbitForm()
-    {
-        let formDiv=document.getElementById('add-habbit-form-container');
-        formDiv.style.display='block';
-    }
-
-    function hideAddHabbitForm()
-    {
-        let formDiv=document.getElementById('add-habbit-form-container');
-        formDiv.style.display='none';
-    }
-</script>

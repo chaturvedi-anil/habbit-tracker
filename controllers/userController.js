@@ -13,7 +13,7 @@ module.exports.signUp = function(req, res)
     //if user is already signed in then redirect user to profile page 
     if(req.isAuthenticated())
     {
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
 
     return res.render('sign_up',{
@@ -26,7 +26,7 @@ module.exports.singIn = function(req, res)
     //if user is already signed in then redirect user to profile page
     if(req.isAuthenticated())
     {
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     } 
 
     return res.render('sign_in',{
@@ -76,7 +76,7 @@ module.exports.create = async function(req, res)
 module.exports.createSession = function(req, res)
 {
     req.flash('success', 'Logged In Successfully');
-    return res.redirect('/users/profile');
+    return res.redirect('/');
 }
 
 // sign out

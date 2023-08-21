@@ -1,15 +1,17 @@
-<link rel="stylesheet" href="./css/profile.css">
-<main>
-    <h1>User Profile</h1>
-    <ul>
-        <% if(locals.user){ %>
-            <li>
-                <%= user.name %>
+<main class="container mt-5">
+    <h1 class="text-center mb-4">User Profile</h1>
+    <ul class="list-group">
+        <% if (locals.user) { %>
+            <li class="list-group-item">
+                Name: <%= user.name %>
             </li>
-            <li>
-                <%= user.email %>
+            <li class="list-group-item">
+                Email: <%= user.email %>
+            </li>
+        <% } else { %>
+            <li class="list-group-item">
+                No user data available.
             </li>
         <% } %>
     </ul>
-
 </main>

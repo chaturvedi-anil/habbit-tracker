@@ -9,6 +9,7 @@ module.exports.createHabbit = async function(req, res)
         // added for date
         let dates = [], tzoffset = (new Date()).getTimezoneOffset() * 60000;
         var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 10);
+        console.log(localISOTime);
         dates.push({ date: localISOTime, complete: 'none' });
 
         // Create a new Habbit using the Habbit model
