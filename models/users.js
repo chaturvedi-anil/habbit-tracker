@@ -23,7 +23,12 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.ObjectId,
             ref: 'Habbits'
         }
-    ]
+    ],
+    view: 
+    {
+        type: String,
+        default: 'daily'
+    }
 },
 {
     timestamps: true

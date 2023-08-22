@@ -10,6 +10,9 @@ router.get('/sign-up', usersController.signUp);
 
 router.post('/create', usersController.create);
 
+// user view controller
+router.post('/user-view', usersController.habitView);
+
 // use passport as a middileware to authenticate
 router.post('/create-session',passport.authenticate(
     'local',

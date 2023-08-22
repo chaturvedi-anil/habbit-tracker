@@ -5,6 +5,8 @@ const habbitController = require('../controllers/habbitController');
 
 router.post('/create', passport.checkAuthentication ,habbitController.createHabbit);
 
+router.get('/status-update/:id', habbitController.statusUpdate);
+
 router.get('/delete/:id', habbitController.deleteHabbit);
 
 

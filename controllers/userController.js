@@ -79,6 +79,33 @@ module.exports.createSession = function(req, res)
     return res.redirect('/');
 }
 
+// user view
+module.exports.habitView = async function(req, res) 
+{
+    try 
+    {
+        // Find the user based on their ID
+        const user = await User.findById(req.user._id);
+
+        // Toggle between 'daily' and 'weekly' view
+        user.view = user.view === 'daily' ? 'weekly' : 'daily';
+
+        // Save the updated user
+        await user.save();
+
+        // Redirect back to the previous page
+        return res.redirect('back');
+    } 
+    catch(err) 
+    {
+        console.error('Error changing view:', err);
+        
+        // Flash an error message and handle the error gracefully
+        req.flash('error', 'Error changing view!');
+        return res.redirect('back');
+    }
+};
+
 // sign out
 module.exports.destroySession = function(req, res)
 {
