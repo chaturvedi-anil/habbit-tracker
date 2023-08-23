@@ -79,9 +79,8 @@ module.exports.statusUpdate =  async function(req, res)
 {
     try 
     {
-        // console.log(req.habbit);
-        const requestedDate = req.query.date;
-        const habitId = req.query.id;
+        const requestedDate = req.params.date;
+        const habitId = req.params.id;
 
         // Find the habit by its ID
         const habbit = await Habbit.findById(habitId);
@@ -89,7 +88,9 @@ module.exports.statusUpdate =  async function(req, res)
         if (!habbit) 
         {
             // console.log("habbit not found.");
-            return res.status(404).send("habbit not found.");
+            req.flash('error', 'habbit not found');
+            return res.redirect('back');
+            // return res.status(404).send("habbit not found.");
         }
 
         let dates = habbit.dates;
@@ -136,10 +137,6 @@ module.exports.statusUpdate =  async function(req, res)
         return res.redirect('/');
     }
 };
-
-
-
-
 
 // remove habbit from db
 module.exports.deleteHabbit = async function(req, res)

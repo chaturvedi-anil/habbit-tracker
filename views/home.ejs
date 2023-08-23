@@ -1,17 +1,10 @@
-
+<!-- css file
+<link rel="stylesheet" href="/css/home.css">
 <main>
     <% if(locals.user) { %> 
 
-        <!-- habbit form -->
-        <div id="add-habbit-form-container">
-            <h1>Add New Habbit</h1> 
-            <form action="/habbit/create" method="POST">
-                <input class="text-box" type="text" name="content" placeholder="Enter Habbit" required>
-                <input class="btn" type="submit" value="Add Habbit">
-            </form>
-        </div>
     <div class="habit-container text-center">
-        <h2>Start with a new habit today!</h2>
+        <h2 class="text-white">Start with a new habit today!</h2>
         <form action="/users/user-view" method="POST" class="habit-header">
             <div class="btn-group mb-4" aria-label="Change View">
                 <% if(user.view === "daily"){ %>
@@ -23,13 +16,18 @@
                 <% } %>
             </div>
         </form>
+
         <div class="habit">
-            <i class="fas fa-check-circle" style="color: rgb(143, 233, 58);"></i>
-            -Done&emsp;&emsp;
+            <form action="/habbit/create" method="POST" class="habit-header mb-4">
+                <input class="text-box" type="text" name="content" maxlength="20" placeholder="Enter New Habbit" required>
+                <button type="submit" class="add-btn"><span class="fas fa-plus"></span></button>
+            </form>
+            <i class="fas fa-check-circle " style="color: rgb(143, 233, 58);"></i>
+            <span class="text-white">-Done&emsp;&emsp;</span>
             <i class="fas fa-times-circle" style="color: #E53C37;"></i>
-            -Not Done&emsp;&emsp;
+            <span class="text-white">-Not Done&emsp;&emsp;</span>
             <i class="fas fa-minus-circle" style="color: gold;"></i>
-            -Unmarked&emsp;&emsp;
+            <span class="text-white">-Unmarked&emsp;&emsp;</span>
             <% if(user.view === "daily"){ %>
             <ul class="habit-list">
                 <% habbits.forEach(details => { let tzoffset = (new Date()).getTimezoneOffset() * 60000, found=false, status='';
@@ -55,7 +53,7 @@
                     &emsp;
                     <div class="habit-list-item-name"><%= details.content %></div>
                     <a href="/habbit/delete/<%= details._id %>" class="remove">
-                        <i class="far fa-trash-alt"></i>
+                        <i class="fas fa-trash-alt"></i>
                     </a>
                 </li>
                 <% }) %>
@@ -97,13 +95,107 @@
         </div>
     </div>
     <% } else { %>
-        <p>
-           Lorem ipsum dolor sit amet consectetur adipisicing elit. Non a rerum voluptates ea assumenda. Facere cumque debitis rerum rem nisi aspernatur est minus, voluptatum, ea recusandae reiciendis autem fuga! Quis.
-           Fugiat delectus molestias ea aut quidem nam maiores dolor aperiam accusantium atque, veniam minus laudantium a ut tenetur quo alias libero ab soluta quasi labore! Nulla excepturi doloremque quaerat omnis?
-           Aliquam quis provident quos iste eligendi fuga at voluptatum quasi error quibusdam officiis consequatur porro assumenda, tempore repudiandae, sunt nobis libero reiciendis soluta alias earum. Qui voluptates laudantium accusantium quasi.
-           Debitis sed maxime facilis, ratione earum amet aperiam dolorum modi quas velit possimus optio neque soluta quasi similique commodi. Culpa facere magnam earum optio voluptatibus? Cupiditate ab asperiores quo! Aut!
-           Eligendi blanditiis ad nam id quos suscipit itaque earum, quas rem aspernatur doloremque labore explicabo cumque ut totam magni accusantium praesentium! Commodi fugit nulla nobis itaque suscipit nemo iste veritatis.
-        </p>
+
+        <div class="else-container">
+            <h1>Welcome to our Habit Tracker App!</h1>
+            <p>
+                Welcome to our Habit Tracker App! Whether you're aiming to develop new positive habits or break free from unwanted ones, our app is here to assist you on your journey to personal growth and self-improvement.
+                With our user-friendly interface and intuitive features, tracking your daily habits has never been easier. You can set goals, monitor your progress, and gain insights into your habits over time.
+                Our app empowers you to take control of your routine, make better choices, and achieve your aspirations. Join our community of like-minded individuals who are committed to making positive changes in their lives.
+                Whether it's fitness, productivity, mindfulness, or any other area of self-improvement, our Habit Tracker App is your companion for transformation.
+            </p>
+        </div>
     <% } %> 
 </main>
+ -->
 
+ <!-- css file -->
+<link rel="stylesheet" href="/css/home.css">
+<main>
+    <% if(locals.user) { %> 
+
+    <div class="habit-container text-center">
+        <h2 class="text-white">Start with a new habit today!</h2>
+        <form action="/users/user-view" method="POST" class="habit-header">
+            <div class="btn-group mb-4" aria-label="Change View">
+                <!-- Simplify the button condition using ternary operator -->
+                <button type="submit" class="btn btn-primary <%= user.view === 'daily' ? 'active' : '' %>" aria-pressed="true">Daily</button>
+                <button type="submit" class="btn btn-primary <%= user.view === 'weekly' ? 'active' : '' %>">Weekly</button>                
+            </div>
+        </form>
+
+        <div class="habit">
+            <form action="/habbit/create" method="POST" class="habit-header mb-4">
+                <input class="text-box" type="text" name="content" maxlength="20" placeholder="Enter New Habit" required>
+                <button type="submit" class="add-btn"><span class="fas fa-plus"></span></button>
+            </form>
+            <!-- Use CSS classes to set icon colors -->
+            <i class="fas fa-check-circle text-success"></i>
+            <span class="text-white">-Done&emsp;&emsp;</span>
+            <i class="fas fa-times-circle text-danger"></i>
+            <span class="text-white">-Not Done&emsp;&emsp;</span>
+            <i class="fas fa-minus-circle text-warning"></i>
+            <span class="text-white">-Unmarked&emsp;&emsp;</span>
+            <% if(user.view === "daily"){ %>
+            <ul class="habit-list">
+                <!-- Move complex logic out of the template for better readability -->
+                <% habbits.forEach(details => {
+                    const today = new Date().toISOString().slice(0, 10);
+                    const tzoffset = new Date().getTimezoneOffset() * 60000;
+                    const foundStatus = details.dates.find(item => item.date === today);
+                    const status = foundStatus ? foundStatus.complete : '';
+                    %>
+                <li class="habit-list-item">
+                    <!-- Use a separate route for updating habits -->
+                    <a href="/habbit/status-update/<%=details._id%>/<%=today%>" class="status">
+                        <!-- Use a simpler condition to set icon based on status -->
+                        <i class="fas <%= status === 'yes' ? 'fa-check-circle text-success' : (status === 'no' ? 'fa-times-circle text-danger' : 'fa-minus-circle text-warning') %>"></i>
+                    </a>
+                    &emsp;
+                    <div class="habit-list-item-name"><%= details.content %></div>
+                    <a href="/habbit/delete/<%= details._id %>" class="remove">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </li>
+                <% }) %>
+            </ul>
+            <% } else { %>
+            <ul class="habit-list text-center">
+                <!-- Similar improvement in the weekly view loop -->
+                <% habbits.forEach(details => { %>
+                <li class="habit-list-item">
+                    <div class="habit-list-item-name"><%= details.content %></div>
+                    <a href="/habbit/delete/<%= details._id %>" class="remove">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                    <% days.forEach(day => {
+                        const foundStatus = details.dates.find(item => item.date === day.date);
+                        const status = foundStatus ? foundStatus.complete : '';
+                        %>
+                    <div class="dotw">
+                        <div class="day mt-0"><span><%= day.day + ", " + day.date.slice(-2) %></span></div>
+                        <a href="/habbit/status-update/<%= details._id %>/<%= day.date %>" class="status2 mt-4">
+                            <i class="fas <%= status === 'yes' ? 'fa-check-circle text-success' : (status === 'no' ? 'fa-times-circle text-danger' : 'fa-minus-circle text-warning') %>"></i>
+                        </a>
+                    </div>
+                    <% }) %>
+                </li>
+                <% }) %>
+            </ul>
+            <% } %>
+        </div>
+    </div>
+    <% } else { %>
+
+        <div class="else-container">
+            <h1>Welcome to our Habit Tracker App!</h1>
+            <p>
+                <!-- Maintain consistent indentation and wrap long lines for readability -->
+                Welcome to our Habit Tracker App! Whether you're aiming to develop new positive habits or break free from unwanted ones, our app is here to assist you on your journey to personal growth and self-improvement.
+                With our user-friendly interface and intuitive features, tracking your daily habits has never been easier. You can set goals, monitor your progress, and gain insights into your habits over time.
+                Our app empowers you to take control of your routine, make better choices, and achieve your aspirations. Join our community of like-minded individuals who are committed to making positive changes in their lives.
+                Whether it's fitness, productivity, mindfulness, or any other area of self-improvement, our Habit Tracker App is your companion for transformation.
+            </p>
+        </div>
+    <% } %> 
+</main>
