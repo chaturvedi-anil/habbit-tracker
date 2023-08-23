@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/habbit_tracker_development');
+mongoose.connect(process.env.MONGO_DB_URL_LOCAL);
 
 const db=mongoose.connection;
 
