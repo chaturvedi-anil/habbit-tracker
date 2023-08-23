@@ -21,7 +21,7 @@ module.exports.createHabbit = async function(req, res)
             if (habitExists) 
             {
                 // If habit exists, display an error message and redirect back
-                console.log("Habit exists!");
+                // console.log("Habit exists!");
                 req.flash('error', 'Habit already exists!');
                 return res.redirect('back');
             } 
@@ -35,7 +35,7 @@ module.exports.createHabbit = async function(req, res)
         
                 // Flash a success message and redirect back
                 req.flash('success', 'Habit updated successfully');
-                console.log(habbit);
+                // console.log(habbit);
                 return res.redirect('back');
             }
         } 
@@ -66,10 +66,10 @@ module.exports.createHabbit = async function(req, res)
     catch (err) 
     {
         // Handle any errors that occurred during the process
-        console.error(`createHabit ${err}`);
+        // console.error(`createHabit ${err}`);
     
         // Flash an error message and redirect back
-        req.flash('error', 'Error creating new habit');
+        req.flash('error', 'Error in creating a new habit');
         return res.redirect('back');
     }
 }
@@ -79,7 +79,7 @@ module.exports.statusUpdate =  async function(req, res)
 {
     try 
     {
-        console.log(req.habbit);
+        // console.log(req.habbit);
         const requestedDate = req.query.date;
         const habitId = req.query.id;
 
@@ -88,7 +88,7 @@ module.exports.statusUpdate =  async function(req, res)
 
         if (!habbit) 
         {
-            console.log("habbit not found.");
+            // console.log("habbit not found.");
             return res.status(404).send("habbit not found.");
         }
 
@@ -125,13 +125,15 @@ module.exports.statusUpdate =  async function(req, res)
         habbit.dates = dates;
         await habbit.save();
 
-        console.log("Habit updated:", habbit);
+        // console.log("Habit updated:", habbit);
+        req.flash('success', 'Habbit updated succussfully');
         res.redirect('back');
     } 
     catch (error) 
     {
-        console.error("Error updating habit:", error);
-        res.status(500).send("Error updating habit.");
+        // console.error("Error updating habit:", error);
+        req.flash('error', 'Error in updating habbit');
+        return res.redirect('/');
     }
 };
 
@@ -166,7 +168,7 @@ module.exports.deleteHabbit = async function(req, res)
     catch(err)
     {
         // console.log(`Error in deleting habbit : ${err}`);
-        req.flash('error', err);
+        req.flash('error', 'error in deleting habbit');
         return res.redirect('/');
     }
 }

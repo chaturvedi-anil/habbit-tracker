@@ -53,21 +53,21 @@ module.exports.create = async function(req, res)
         {
             let newUser = await User.create(req.body);
             // console.log('new user created');
-            req.flash('success', 'new user created');
+            req.flash('success', 'New user created');
             return res.redirect('/users/sign-in');
         }
         // if user email is found then redirect user to singup page
         else
         {
             // console.log('this user already exist');
-            req.flash('error', 'this user already exist');
+            req.flash('error', 'This user already exist');
             return res.redirect('back');
         }
     }
     catch(err)
     {
         // console.log(`Error in creating a user ${err}`);
-        req.flash('error', err);
+        req.flash('error', 'Error in creating a user');
         return res.redirect('back');
     }
 } 
@@ -98,10 +98,10 @@ module.exports.habitView = async function(req, res)
     } 
     catch(err) 
     {
-        console.error('Error changing view:', err);
+        // console.error('Error changing view:', err);
         
-        // Flash an error message and handle the error gracefully
-        req.flash('error', 'Error changing view!');
+        // Flash an error message and handle the error 
+        req.flash('error', 'Error in changing view!');
         return res.redirect('back');
     }
 };

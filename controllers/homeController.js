@@ -1,7 +1,8 @@
 const Habbit = require('../models/habbits');
 
 // Calculate the date and day information for a given offset from today
-function getDayInfo(offset) {
+function getDayInfo(offset) 
+{
     const today = new Date();
     const targetDate = new Date(today);
     targetDate.setDate(today.getDate() + offset);
@@ -16,7 +17,7 @@ module.exports.home = async function(req, res)
 { 
     try
     {
-        console.log(res.locals.user);
+        // console.log(res.locals.user);
         if(res.locals.user)
         {
             const habbitUser = res.locals.user._id;
@@ -46,7 +47,8 @@ module.exports.home = async function(req, res)
     }
     catch(err)
     {
-        console.error('Error fetching habbits home page :', err);
+        // console.error('Error fetching habbits home page :', err);
+        // req.flash('error', 'Error fetching habbits');
         res.status(500).send('Internal Server Error');
     };
 }
