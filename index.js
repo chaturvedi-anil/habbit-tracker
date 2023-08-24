@@ -32,7 +32,7 @@ app.set('views', './views');
 const store= new MongoDBStore(
     {
         // database name its only taking url 
-        uri: 'mongodb://localhost/habbit_tracker_development',
+        uri: process.env.MONGO_DB_CLOUD_SERVER,
         collection: 'mySession'
     },
     function(err) {
